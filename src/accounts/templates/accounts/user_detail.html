@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+  <h2>User Profile</h2>
+  <hr>
+  <h4>{{ object.username }}</h4>
+  <p>{{ object.email }}</p>
+  <hr>
+  <p>Followers : {{ object.followers.all.count }}</p>
+  {% if request.user != object %}
+  <p><a class="btn btn-link" href="{{ object.profile.get_follow_url }}">{% if is_following %}Unfollow{% else %}Follow{% endif %}</a></p>
+  {% endif %}
+  <hr>
+  <p>Following : {{ object.profile.get_following.count }}</p>
+  {% for user in object.profile.get_following %}
+    <p><a href="{{ user.profile.get_absolute_url }}">{{ user.username }}</a></p>
+  {% empty %}
+    <p>User is not following anyone.</p>
+  {% endfor %}
+  <hr>
+  <p>Followers : {{ object.followers.all.count }}</p>
+  {% for profile in object.followers.all %}
+    <p><a href="{{ profile.get_absolute_url }}">{{ profile.user.username }}</a></p>
+  {% empty %}
+    <p>The user has no followers.</p>
+  {% endfor %}
+  <hr>
+  <h3>Blogs : </h3>
+  {% for blog in object.blogs.all %}
+    <h4>{{ blog.title }}</h4>
+    <p>{{ blog.timestamp }}</p>
+    <p>{{ blog.content }}</p>
+    <hr>
+  {% empty %}
+    <p>The user has no blogs.</p>
+  {% endfor %}
+{% endblock %}

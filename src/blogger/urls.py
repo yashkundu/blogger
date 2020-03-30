@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$',home_page_view, name='home'),
     url(r'^blogs/',include('blogs.urls',namespace='blogs')),
+    url(r'^accounts/',include('accounts.urls', namespace='accounts')),
 ]

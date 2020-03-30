@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^$',home_page_view, name='home'),
     url(r'^blogs/',include('blogs.urls',namespace='blogs')),
     url(r'^accounts/',include('accounts.urls', namespace='accounts')),
+    url(r'^api-auth/', include('rest_framework.urls')),
 ]

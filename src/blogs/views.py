@@ -21,7 +21,11 @@ class BlogListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Blog.objects.filter(Q(author__in=user.profile.get_following()) | Q(author=user)).order_by('-timestamp')
+        qs = Blog.objects.filter(Q(author__in=user.profile.get_following()) | Q(author=user)).order_by('-timestamp')
+        query = self.request.GET.get('q', None)
+        if query is not None:
+            qs = qs.filter( Q(title__icontains=query) | Q(content__icontains=query)).distinct()
+        return qs
 
 
 class BlogDetailView(DetailView):

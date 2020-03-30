@@ -5,8 +5,8 @@
 {% block content %}
   <h2>Blogs</h2><br>
   {% for object in object_list %}
-    <h4>{{ object.title }}</h3>
-    <small>by {{ object.author }} on {{ object.timestamp }}</small>
+    <h4>{{ object.title }} <a class="btn btn-link" href="{% url 'blogs:detail' pk=object.pk %}">(View)</a></h3>
+    <small>by <a href="{{ object.author.profile.get_absolute_url }}">{{ object.author }}</a> on {{ object.timestamp }}</small>
     <p>{{ object.content }}</p>
     <hr>
   {% endfor %}
